@@ -11,5 +11,12 @@ const intialState = {
 }
 
 export default function (state = intialState, action) {
-
+    switch (action.type) {
+        case GET_ITEMS:
+            return {
+                ...state
+            }
+        default:
+            return state
+    }
 }
