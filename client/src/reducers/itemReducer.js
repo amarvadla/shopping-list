@@ -16,6 +16,11 @@ export default function (state = intialState, action) {
             return {
                 ...state
             }
+        case DELETE_ITEM:
+            return {
+                ...state,
+                items: state.items.filter((item) => item.id !== action.payLoad)
+            }
         default:
             return state
     }

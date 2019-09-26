@@ -3,26 +3,22 @@ import { Container, ListGroup, ListGroupItem, Button } from 'reactstrap'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import uuid from 'uuid'
 import { connect } from 'react-redux'
-import { getItems } from '../actions/itemAction'
+import { getItems, deleteItem } from '../actions/itemAction'
 import PropTypes from 'prop-types'
 
 class ShoppingList extends Component {
 
-    // state = {
-    //     items: [
-    //         { id: uuid(), name: "Eggs" },
-    //         { id: uuid(), name: "Milk" },
-    //         { id: uuid(), name: "steak" },
-    //         { id: uuid(), name: "water" }
-    //     ]
-    // }
 
     componentDidMount() {
         this.props.getItems()
     }
 
+    onDeleteClick = id => {
+        this.props.deleteItem(id)
+    }
+
     render() {
-        
+
         const { items } = this.props.item
         return <div>
             <Container>
@@ -42,11 +38,10 @@ class ShoppingList extends Component {
                         {items.map(({ id, name }) => {
                             return <CSSTransition key={id} timeout={500} classNames="fade">
                                 <ListGroupItem>
-                                    <Button className='remove-btn' color='danger' size='sm' onClick={() => {
-                                        this.setState(state => ({
-                                            items: items.filter(item => item.id !== id)
-                                        }))
-                                    }}>
+                                    <Button className='remove-btn' color='danger' size='sm'
+                                        onClick={
+                                            this.onDeleteClick.bind(this, id)
+                                        }>
                                         &times;
                                     </Button>
                                     {name}
@@ -62,7 +57,7 @@ class ShoppingList extends Component {
 }
 
 ShoppingList.propTypes = {
-    getItems : PropTypes.func.isRequired,
+    getItems: PropTypes.func.isRequired,
     item: PropTypes.object.isRequired
 }
 
@@ -70,4 +65,4 @@ const mapStateToProps = (state) => {
     return { item: state.item }
 }
 
-export default connect(mapStateToProps, {getItems})(ShoppingList)
+export default connect(mapStateToProps, { getItems, deleteItem })(ShoppingList)
