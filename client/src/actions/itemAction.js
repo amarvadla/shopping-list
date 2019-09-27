@@ -12,3 +12,10 @@ export const deleteItem = (id) => {
         payLoad: id
     }
 }
+
+export const addItem = item => {
+    return {
+        type: ADD_ITEM,
+        payLoad: item
+    }
+}
