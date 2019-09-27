@@ -13,10 +13,7 @@ router.post('/', (req, res) => {
     })
 
     item.save().then((data) => {
-        res.json({
-            statusCode: 1,
-            statusMessage: 'success'
-        })
+        res.json(data)
     }).catch((err) => {
         res.json(err)
     })
